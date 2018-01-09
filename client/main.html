@@ -1,0 +1,121 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Airly API portal</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Airly" src="/img/logo.png" height="42">
+            </a>
+            {{> loginButtons}}
+        </div>
+        <div class="navbar-right">
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Welcome to Airly API portal</h1>
+        {{> apiKey}}
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Android App</h2>
+            <p>If you didn't know, we have a handy app for you<a></a></p>
+            <p><a class="btn btn-default" href="https://play.google.com/store/apps/details?id=eu.airly.android"
+                  role="button">Get it »</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Suggestions, issues?</h2>
+            <p>Feel free to contact us any time</p>
+            <p><a class="btn btn-default" href="mailto:contact@airly.eu" role="button">Email us »</a></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <div class="col-sm-9">
+            © 2017 <a href="https://airly.eu">Airly, Inc.</a>
+        </div>
+        <div class="col-sm-3">
+            <p>by Ivan Vaskevych</p>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+</body>
+
+
+<template name="apiKey">
+    {{#if showGetAccessButton}}
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" id="getAccess">Get API access »</a></p>
+    {{/if}}
+
+    {{#if notLoggedIn}}
+        <div class="alert alert-warning" role="alert">Please login in order to get an API access key.</div>
+    {{else if notVerified}}
+        <div class="alert alert-warning" role="alert">Please verify your account first. Check your mailbox for a
+            verification email. Check spambox as well, just in case...
+        </div>
+    {{else if accessKey}}
+        <div class="alert alert-info" role="alert">Congratulations, you've got your access to Airly API! Your api key
+            is: <br>
+            <b>{{accessKey}}</b>
+        </div>
+        <p>Next steps:</p>
+        <ul>
+            <li>Goto <a href="http://apidocs.airly.eu/">API docs</a></li>
+            <li>Click Authorize and enter your key</li>
+            <li>Play around with the requests available</li>
+            <li>Make an app or device that will change the world. Or become famous. Or both.</li>
+        </ul>
+    {{/if}}
+
+    {{#unless accessKey }}
+        <a class="btn btn-info btn-lg" role="button" href="http://apidocs.airly.eu/">API docs »</a>
+    {{/unless}}
+
+    {{> tosModalTemplate}}
+</template>
+
+<template name="tosModalTemplate">
+    <div class="modal fade" id="tosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Terms of Service</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <input type="checkbox" id="acceptedCheckbox">
+                        I read the <a target="_blank" href="/api-tos-en.pdf">Terms of Service</a> and accept.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Disagree</button>
+                    <button type="button" class="btn btn-primary" id="accept" disabled>I Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
